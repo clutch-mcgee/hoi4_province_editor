@@ -1,5 +1,5 @@
 # HOI4 Province Editor
-My for of ScottyThePilot's app to support resolution change, the lazy, unsafe and once per launch way.
+My fork of ScottyThePilot's HOI4PE to support resolution change, the lazy, unsafe and once per launch way.
 Maybe I will rework it to support actual resizing while running one day, but I don't know Rust and I am also lazy.
 
 ## Manually Building
