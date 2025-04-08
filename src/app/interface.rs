@@ -464,10 +464,10 @@ pub fn construct_interface() -> Interface {
     buttons.push(ButtonElement { base, id });
   };
 
-  let toolbar_plate_size = [crate::WINDOW_WIDTH as f64, toolbar_height as f64];
+  let toolbar_plate_size = [unsafe { crate::WINDOW_WIDTH } as f64, toolbar_height as f64];
   let toolbar_plate = PlateComponent { pos: [0.0, 0.0], size: toolbar_plate_size };
 
-  let sidebar_plate_size = [sidebar_width as f64, crate::WINDOW_HEIGHT as f64];
+  let sidebar_plate_size = [sidebar_width as f64, unsafe { crate::WINDOW_HEIGHT } as f64];
   let sidebar_plate = PlateComponent { pos: [0.0, toolbar_height as f64], size: sidebar_plate_size };
 
   let _ = TOOLBAR_HEIGHT.set(toolbar_height);

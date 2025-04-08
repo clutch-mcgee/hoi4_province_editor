@@ -20,10 +20,12 @@ pub struct Config {
   pub generate_coastal_on_save: bool,
   #[serde(alias = "terrain")]
   pub terrains: FxHashMap<String, Terrain>,
-  pub extra_warnings: ExtraWarnings
+  pub extra_warnings: ExtraWarnings,
+  pub window_size: [u32; 2]
 }
-
+ 
 impl Config {
+
   pub fn load() -> Result<Config, LoadConfigError> {
     use std::io::ErrorKind;
     let mut config = match fs::read("hoi4pe_config.toml") {
@@ -76,7 +78,8 @@ impl Default for Config {
         lone_pixels: false,
         few_shared_borders: false,
         few_shared_borders_threshold: 4
-      }
+      },
+      window_size: [1920, 1080]
     }
   }
 }

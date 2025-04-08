@@ -25,7 +25,7 @@ use std::io::BufWriter;
 use std::fmt;
 
 const ZOOM_SENSITIVITY: f64 = 0.125;
-const WINDOW_CENTER: Vector2<f64> = [WINDOW_WIDTH as f64 / 2.0, WINDOW_HEIGHT as f64 / 2.0];
+static mut WINDOW_CENTER: Vector2<f64> = [unsafe { WINDOW_WIDTH } as f64 / 2.0, unsafe { WINDOW_HEIGHT } as f64 / 2.0];
 
 pub struct Canvas {
   bundle: Bundle,
@@ -43,6 +43,7 @@ pub struct Canvas {
 }
 
 impl Canvas {
+
   pub fn load(location: Location) -> Result<Canvas, Error> {
     let bundle = Bundle::load(&location, Config::load()?)?;
     let history = History::new(bundle.config.max_undo_states, &bundle.map);
@@ -120,7 +121,7 @@ impl Canvas {
     self.draw_tool(ctx, cursor_pos, gl);
 
     let camera_info = self.camera_info(cursor_pos);
-    let pos = [PADDING[0] + get_sidebar_width(), WINDOW_HEIGHT as f64 - PADDING[1] * 1.25];
+    let pos = [PADDING[0] + get_sidebar_width(), unsafe { WINDOW_HEIGHT } as f64 - PADDING[1] * 1.25];
     let transform = ctx.transform.trans_pos(pos);
     graphics::text(colors::WHITE, FONT_SIZE, &camera_info, glyph_cache, transform, gl)
       .expect("unable to draw text");
@@ -836,7 +837,7 @@ impl Camera {
     let texture_size = [width as f64, height as f64];
     let display_matrix = vecmath::mat2x3_id()
       .trans_pos(vecmath::vec2_scale(texture_size, -0.5))
-      .trans_pos(WINDOW_CENTER);
+      .trans_pos(unsafe { WINDOW_CENTER });
     Camera {
       texture_size,
       display_matrix,
@@ -864,7 +865,7 @@ impl Camera {
   pub fn reset(&mut self) {
     self.display_matrix = vecmath::mat2x3_id()
       .trans_pos(vecmath::vec2_scale(self.texture_size, -0.5))
-      .trans_pos(WINDOW_CENTER);
+      .trans_pos(unsafe { WINDOW_CENTER });
   }
 
   pub fn set_panning(&mut self, panning: bool) {
@@ -905,8 +906,8 @@ impl Camera {
 
   #[inline]
   pub(super) fn within_viewport(&self, pos: Vector2<f64>) -> bool {
-    0.0 <= pos[0] && pos[0] < WINDOW_WIDTH as f64 &&
-    0.0 <= pos[1] && pos[1] < WINDOW_HEIGHT as f64
+    0.0 <= pos[0] && pos[0] < unsafe { WINDOW_WIDTH } as f64 &&
+    0.0 <= pos[1] && pos[1] < unsafe { WINDOW_HEIGHT } as f64
   }
 }
 

@@ -11,7 +11,7 @@ change-view-mode-on-undo = true
 # Whether coastal provinces should be re-generated upon saving
 generate-coastal-on-save = false
 
-
+window-size = [1920, 1080]
 
 # These are extra warnings that can be displayed on the map when calculating problems
 # Uncomment to enable them

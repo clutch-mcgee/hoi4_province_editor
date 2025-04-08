@@ -63,8 +63,8 @@ impl Alerts {
 
   pub fn draw(&self, ctx: Context, glyph_cache: &mut FontGlyphCache, gl: &mut GlGraphics) {
     const LINE_SPACING: f64 = 1.10;
-    const WINDOW_HEIGHT_F: f64 = WINDOW_HEIGHT as f64;
-    const WINDOW_WIDTH_F: f64 = WINDOW_WIDTH as f64;
+    static WINDOW_HEIGHT_F: f64 = unsafe { WINDOW_HEIGHT } as f64;
+    static WINDOW_WIDTH_F: f64 = unsafe { WINDOW_WIDTH } as f64;
 
     let v_metrics = font::get_v_metrics();
     let font_height = ((v_metrics.ascent - v_metrics.descent) * LINE_SPACING).round();
